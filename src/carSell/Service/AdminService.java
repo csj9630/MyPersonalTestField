@@ -1,6 +1,8 @@
-package carSell.admin;
+package carSell.Service;
 
 import java.util.List;
+
+import carSell.DTO.AdminDTO;
 
 public class AdminService {
 	public AdminService() {

@@ -1,4 +1,4 @@
-package carSell.admin;
+package carSell.DTO;
 
 import java.sql.Date;
 

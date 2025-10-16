@@ -1,4 +1,4 @@
-package carSell.user;
+package carSell.DTO;
 
 import java.sql.Date;
 
