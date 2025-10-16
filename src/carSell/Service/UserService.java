@@ -46,9 +46,11 @@ public class UserService {
 	}// modifyUser
 
 	
-	public int removeUser(int UserNum) {
-		int flag = 0;
-
-		return flag;
-	}// removeUser
+//	public int removeUser(int UserNum) {
+//		int flag = 0;
+//
+//		return flag;
+//	}// removeUser
+	
+	
 }

@@ -5,19 +5,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import carSell.Service.AdminService;
 import carSell.Service.UserService;
-import carSell.design.ModifyUserInfoDesign;
-import carSell.function.ModifyUserFunction;
+import carSell.design.ModifyUserPasswordDesign;
+import carSell.function.ModifyUserPasswordFunction;
 
-public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
-	private ModifyUserInfoDesign mud;
-	private ModifyUserFunction muf;
+public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListener {
+	private ModifyUserPasswordDesign mpd;
+	private ModifyUserPasswordFunction mpf;
 	
-	public ModifyUserInfoEvt(ModifyUserInfoDesign mud) {
-		this.mud = mud;
-		this.muf = new ModifyUserFunction(mud);
-		
+	public ModifyUserPasswordEvt(ModifyUserPasswordDesign mpd) {
+		this.mpd = mpd;
+		this.mpf= new ModifyUserPasswordFunction(mpd);
 	}
 
 	@Override
@@ -32,4 +30,4 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		super.windowClosing(e);
 	}
 
-}//class
+}
