@@ -6,6 +6,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
+	Modify
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
