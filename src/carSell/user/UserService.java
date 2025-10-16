@@ -1,4 +1,4 @@
-package classDiagram_Test;
+package carSell.user;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -1,0 +1,52 @@
+package carSell.admin;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+
+
+public class AdminService {
+	public AdminService() {
+	} // UserService
+
+
+	public boolean addUser(UserDTO uDTO) {
+		boolean flag = false;// 기본은 실패 상태
+
+
+		return flag;
+	}// addUser
+
+
+	public List<UserDTO> searchAllUser() {
+		List<UserDTO> list = null;
+
+
+		return list;
+
+	}// searchAllUser
+
+
+	public UserDTO searchOneUser(int num) {
+		UserDTO uDTO = null;
+	
+
+		return uDTO;
+	}// searchOneUser
+
+
+	public int modifyUser(UserDTO uDTO) {
+		int flag = 0;
+
+
+		return flag;
+	}// modifyUser
+
+	
+	public int removeUser(int UserNum) {
+		int flag = 0;
+
+		return flag;
+	}// removeUser
+}

@@ -1,4 +1,4 @@
-package classDiagram_Test;
+package carSell.user;
 
 import java.sql.Date;
 
