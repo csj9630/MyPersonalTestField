@@ -1,13 +1,11 @@
 package carSell.design;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import carSell.event.ModifyUserInfoEvt;
-
-public class ModifyUserInfoDesign extends JFrame {
+public class ModifyUserInfoDesign extends JDialog {
 
 	private JTextField jtfName, jtfEmail, jtfTel, jtfCard, jtfAddr;
 	private JLabel jlTitle;
@@ -16,7 +14,7 @@ public class ModifyUserInfoDesign extends JFrame {
 	private JButton jtbnModify;
 
 	public ModifyUserInfoDesign() {
-		super("내 정보 수정");
+		//super("내 정보 수정");
 
 	}// ModifyUserInfoDesign
 

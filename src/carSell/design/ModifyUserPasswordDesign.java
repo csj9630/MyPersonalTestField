@@ -1,22 +1,23 @@
 package carSell.design;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import carSell.event.ModifyUserInfoEvt;
 
-public class ModifyUserPasswordDesign extends JFrame {
+public class ModifyUserPasswordDesign extends JDialog {
 
 	private JTextField jtfPw, jtfNewPw, jtfNewPwCheck;
 	private JLabel jlTitle;
 	private JLabel jlPw, jlNewPw, jlNewPwCheck;
 	private JLabel jlWrnPw, jlWrnNewPw, jlWrnNewPwCheck, jlWrnCard, jlWrnAddr;
-	private JButton jtbnModify;
+	private JButton jbtnModify;
 
 	public ModifyUserPasswordDesign() {
-		super("비밀번호 수정");
+		//super("비밀번호 수정");
 
 	}// ModifyUserInfoDesign
 
@@ -68,8 +69,8 @@ public class ModifyUserPasswordDesign extends JFrame {
 		return jlWrnAddr;
 	}
 
-	public JButton getJtbnModify() {
-		return jtbnModify;
+	public JButton getJbtnModify() {
+		return jbtnModify;
 	}
 
 }// class

@@ -31,9 +31,9 @@ public class ModifyUserFunction {
 	
 
 	
-	public void updateUserStatus() {
-		
-	}//updateUserStatus
+//	public void updateUserStatus() {
+//		
+//	}//updateUserStatus
 	
 //	public void removeUser() {
 //		
