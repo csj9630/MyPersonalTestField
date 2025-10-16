@@ -1,5 +1,5 @@
 package carSell.design;
 
-public class UserInfoModifyDesign {
+public class DesignUserInfoModify {
 
 }

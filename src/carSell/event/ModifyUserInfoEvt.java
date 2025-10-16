@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class UserInfoModifyEvt extends WindowAdapter implements ActionListener {
-
+public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
