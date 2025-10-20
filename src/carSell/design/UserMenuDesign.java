@@ -1,5 +1,6 @@
 package carSell.design;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -11,6 +12,11 @@ import javax.swing.JPanel;
 
 import carSell.event.UserMenuEvt;
 
+/**
+ * 작업자 : 최승준<br>
+ * '내 정보 메뉴' 화면을 디자인한 클래스<br>
+ * 
+ */
 public class UserMenuDesign extends JFrame {
 
 	private JButton jbtnModifyInfo, jbtnModifyPw, jbtnOrderList;
@@ -59,6 +65,11 @@ public class UserMenuDesign extends JFrame {
 		//----createEmptyBorder(int top, int left, int bottom, int right)
 		jpNorth.setBorder(BorderFactory.createEmptyBorder(10,10,10, 10));
 		jpCenter.setBorder(BorderFactory.createEmptyBorder(100,10, 100, 10));
+		
+		//JPanel에 배경색 넣기
+		jpNorth.setBackground(Color.white);
+		jpCenter.setBackground(Color.white);
+		
 		
 		add("North",jpNorth);
 		add("Center",jpCenter);

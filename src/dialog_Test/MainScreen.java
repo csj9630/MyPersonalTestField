@@ -1,4 +1,4 @@
-package Package1;
+package dialog_Test;
 
 public class MainScreen {
 

@@ -13,13 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class ModifyUserInfoDesign extends JDialog {
+public class ModifyUserInfoDesign_abs extends JDialog {
 
 	private JTextField jtfName, jtfEmail, jtfTel, jtfCard, jtfAddr;
 	private JLabel jlWrnName, jlWrnEmail, jlWrnTel, jlWrnCard, jlWrnAddr;
-	private JButton jbtnModify;
+	private JButton jtbnModify;
 
-	public ModifyUserInfoDesign(UserMenuDesign umd, boolean modal) {
+	public ModifyUserInfoDesign_abs(UserMenuDesign umd, boolean modal) {
 		super(umd, "내 정보 수정", modal);
 
 		// 폰트 설정
@@ -65,11 +65,11 @@ public class ModifyUserInfoDesign extends JDialog {
 		jtfAddr.setSize(this.WIDTH, 120);
 
 		// 버튼
-		jbtnModify = new JButton("내 정보 수정");
-		jbtnModify.setFont(fontBtn);
-		jbtnModify.setForeground(Color.white);
-		jbtnModify.setBackground(new Color(37, 157, 237));
-		jbtnModify.setSize(this.WIDTH, 60);
+		jtbnModify = new JButton("내 정보 수정");
+		jtbnModify.setFont(fontBtn);
+		jtbnModify.setForeground(Color.white);
+		jtbnModify.setBackground(new Color(37, 157, 237));
+		jtbnModify.setSize(this.WIDTH, 60);
 
 		// 패널
 		JPanel jpNorth = new JPanel();
@@ -140,7 +140,7 @@ public class ModifyUserInfoDesign extends JDialog {
 		jpCenter.add(jpAddr);
 
 		// 버튼 배치
-		jpSouth.add(jbtnModify);
+		jpSouth.add(jtbnModify);
 
 		// South 패널 크기 지정
 		jpSouth.setSize(this.getWidth(), 100);
@@ -210,11 +210,11 @@ public class ModifyUserInfoDesign extends JDialog {
 		return jlWrnAddr;
 	}
 
-	public JButton getJbtnModify() {
-		return jbtnModify;
+	public JButton getJtbnModify() {
+		return jtbnModify;
 	}
 
 	public static void main(String[] args) {
-		new ModifyUserInfoDesign(new UserMenuDesign(), true);
+		new ModifyUserInfoDesign_abs(new UserMenuDesign(), true);
 	}
 }// class

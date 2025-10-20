@@ -1,9 +1,16 @@
 package carSell.design;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import carSell.event.ModifyUserInfoEvt;
@@ -11,14 +18,125 @@ import carSell.event.ModifyUserInfoEvt;
 public class ModifyUserPasswordDesign extends JDialog {
 
 	private JTextField jtfPw, jtfNewPw, jtfNewPwCheck;
-	private JLabel jlTitle;
-	private JLabel jlPw, jlNewPw, jlNewPwCheck;
-	private JLabel jlWrnPw, jlWrnNewPw, jlWrnNewPwCheck, jlWrnCard, jlWrnAddr;
+	private JLabel jlWrnPw, jlWrnNewPw, jlWrnNewPwCheck;
 	private JButton jbtnModify;
 
-	public ModifyUserPasswordDesign() {
-		//super("비밀번호 수정");
+	public ModifyUserPasswordDesign(UserMenuDesign umd, boolean modal) {
+		super(umd, "비밀번호 수정", modal);
 
+		// 폰트 설정
+		Font fontTitle = new Font("맑은고딕", Font.BOLD, 30);
+		Font fontTxtLabel = new Font("맑은고딕", Font.BOLD, 18);
+		Font fontWrn = new Font("맑은고딕", Font.BOLD, 14);
+		Font fontBtn = new Font("맑은고딕", Font.BOLD, 20);
+
+		// 타이틀 라벨
+		JLabel jlTitle = new JLabel("비밀번호 수정");
+		jlTitle.setFont(fontTitle);
+
+		// 텍스트필드명 라벨
+		JLabel jlPw = new JLabel("현재 비밀번호");
+		JLabel jlNewPw = new JLabel("새 비밀번호");
+		JLabel jlNewPwCheck = new JLabel("새 비밀번호 확인");
+
+		jlPw.setFont(fontTxtLabel);
+		jlNewPw.setFont(fontTxtLabel);
+		jlNewPwCheck.setFont(fontTxtLabel);
+
+		// 경고 라벨
+		jlWrnPw = new JLabel("이전 비밀번호를 잘못 입력하셨습니다.");
+		jlWrnNewPw = new JLabel("총 8자 이상, 영문/숫자/득수문자 중 2가지 이상 입력해주세요.");
+		jlWrnNewPwCheck = new JLabel("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+		jlWrnPw.setForeground(Color.red);
+		jlWrnNewPw.setForeground(Color.red);
+		jlWrnNewPwCheck.setForeground(Color.red);
+
+		// 텍스트필드
+		jtfPw = new JTextField("");
+		jtfNewPw = new JTextField("");
+		jtfNewPwCheck = new JTextField("");
+
+		// 버튼
+		jbtnModify = new JButton("비밀번호 수정");
+		jbtnModify.setFont(fontBtn);
+		jbtnModify.setForeground(Color.white);
+		jbtnModify.setBackground(new Color(37, 157, 237));
+		jbtnModify.setSize(this.WIDTH, 60);
+
+		// 패널
+		JPanel jpNorth = new JPanel();
+		JPanel jpCenter = new JPanel();
+		JPanel jpSouth = new JPanel();
+
+		// 세트로 들어갈 패널
+		JPanel jpPw = new JPanel();
+		JPanel jpNewPw = new JPanel();
+		JPanel jpNewPwCheck = new JPanel();
+
+
+		// 각각 패널에 세로 3칸짜리 레이아웃 넣기
+		jpPw.setLayout(new GridLayout(3, 1));
+		jpNewPw.setLayout(new GridLayout(3, 1));
+		jpNewPwCheck.setLayout(new GridLayout(3, 1));
+
+		// 5개의 패널을 center 패널에 삽입.
+		jpCenter.setLayout(new GridLayout(5, 1));
+
+		// 타이틀 배치
+		jpNorth.add(jlTitle);
+
+		// 각 패널 여백
+		jpPw.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));// 상좌하우 여백
+		jpNewPw.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 11));// 상좌하우 여백
+		jpNewPwCheck.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 12));// 상좌하우 여백
+
+		// jlPw 패널 배치
+		jpPw.add(jlPw);
+		jpPw.add(jtfPw);
+		jpPw.add(jlWrnPw);
+//				jpPw.setSize(100, 100);
+		jpCenter.add(jpPw);
+
+		// jlNewPw 패널 배치
+		jpNewPw.add(jlNewPw);
+		jpNewPw.add(jtfNewPw);
+		jpNewPw.add(jlWrnNewPw);
+
+		jpCenter.add(jpNewPw);
+
+		// jlNewPwCheck 패널 배치
+		jpNewPwCheck.add(jlNewPwCheck);
+		jpNewPwCheck.add(jtfNewPwCheck);
+		jpNewPwCheck.add(jlWrnNewPwCheck);
+		jpCenter.add(jpNewPwCheck);
+
+		// 버튼 배치
+		jpSouth.add(jbtnModify);
+
+		// South 패널 크기 지정
+		jpSouth.setSize(this.getWidth(), 100);
+
+		// 배경색깔
+		jpPw.setBackground(Color.white);
+		jpNewPw.setBackground(Color.white);
+		jpNewPwCheck.setBackground(Color.white);
+
+		jpCenter.setBackground(Color.white);
+		jpNorth.setBackground(Color.white);
+
+		// 스크롤 패널을 center에 삽입
+		// 스크롤 패널 생성
+		JScrollPane jsp = new JScrollPane(jpCenter);
+
+		// north, center 패널 배치
+		add("North", jpNorth);
+		add("Center", jsp);
+		add("South", jpSouth);
+
+		// 창 설정
+		setBounds(umd.getX() + 30, umd.getY() + 30, umd.getWidth() - 50, umd.getHeight() + 100); // 부모좌표를 가져올 수 있음.
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}// ModifyUserInfoDesign
 
 	public JTextField getJtfPw() {
@@ -33,22 +151,6 @@ public class ModifyUserPasswordDesign extends JDialog {
 		return jtfNewPwCheck;
 	}
 
-	public JLabel getJlTitle() {
-		return jlTitle;
-	}
-
-	public JLabel getJlPw() {
-		return jlPw;
-	}
-
-	public JLabel getJlNewPw() {
-		return jlNewPw;
-	}
-
-	public JLabel getJlNewPwCheck() {
-		return jlNewPwCheck;
-	}
-
 	public JLabel getJlWrnPw() {
 		return jlWrnPw;
 	}
@@ -61,16 +163,10 @@ public class ModifyUserPasswordDesign extends JDialog {
 		return jlWrnNewPwCheck;
 	}
 
-	public JLabel getJlWrnCard() {
-		return jlWrnCard;
-	}
-
-	public JLabel getJlWrnAddr() {
-		return jlWrnAddr;
-	}
-
 	public JButton getJbtnModify() {
 		return jbtnModify;
 	}
-
+	public static void main(String[] args) {
+		new ModifyUserPasswordDesign(new UserMenuDesign(), true);
+	}
 }// class

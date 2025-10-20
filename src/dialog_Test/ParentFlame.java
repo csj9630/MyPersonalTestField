@@ -1,4 +1,4 @@
-package Package1;
+package dialog_Test;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
