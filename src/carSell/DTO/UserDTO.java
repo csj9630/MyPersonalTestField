@@ -5,7 +5,7 @@ import java.sql.Date;
 public class UserDTO {
 
 	private int user_code;				
-	private String id, pass, name, email, tel,address ;
+	private String id, pass, name, email, tel,address, card_num ;
 	private Date generate_date;
 	private char status_activate;
 	

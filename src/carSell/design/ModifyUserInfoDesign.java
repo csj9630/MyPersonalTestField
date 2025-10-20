@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import carSell.event.ModifyUserInfoEvt;
+
 public class ModifyUserInfoDesign extends JDialog {
 
 	private JTextField jtfName, jtfEmail, jtfTel, jtfCard, jtfAddr;
@@ -27,7 +29,8 @@ public class ModifyUserInfoDesign extends JDialog {
 		Font fontTxtLabel = new Font("맑은고딕", Font.BOLD, 18);
 		Font fontWrn = new Font("맑은고딕", Font.BOLD, 14);
 		Font fontBtn = new Font("맑은고딕", Font.BOLD, 20);
-
+		Font fontJtf = new Font("맑은고딕", Font.PLAIN, 18);
+		
 		// 타이틀 라벨
 		JLabel jlTitle = new JLabel("내 정보 수정");
 		jlTitle.setFont(fontTitle);
@@ -50,19 +53,34 @@ public class ModifyUserInfoDesign extends JDialog {
 		jlWrnTel = new JLabel("내용이 비어있습니다3");
 		jlWrnCard = new JLabel("내용이 비어있습니다4");
 		jlWrnAddr = new JLabel("내용이 비어있습니다5");
+		
+		//경고 라벨 폰트색
 		jlWrnName.setForeground(Color.red);
 		jlWrnEmail.setForeground(Color.red);
 		jlWrnTel.setForeground(Color.red);
 		jlWrnCard.setForeground(Color.red);
 		jlWrnAddr.setForeground(Color.red);
 
+		//경고 라벨 안 보이게
+		jlWrnName.setVisible(false);
+		jlWrnEmail.setVisible(false);
+		jlWrnTel.setVisible(false);
+		jlWrnCard.setVisible(false);
+		jlWrnAddr.setVisible(false);
+		
 		// 텍스트필드
-		jtfName = new JTextField("");
-		jtfEmail = new JTextField("");
-		jtfTel = new JTextField("");
-		jtfCard = new JTextField("");
-		jtfAddr = new JTextField("");
-		jtfAddr.setSize(this.WIDTH, 120);
+		jtfName = new JTextField("김철수");
+		jtfEmail = new JTextField("javaSist@naver.com");
+		jtfTel = new JTextField("010-1234-5678");
+		jtfCard = new JTextField("1234-****-****-7896");
+		jtfAddr = new JTextField("강남시 영통구 우환동 국민로12번길 504-1");
+		
+		//텍스트필드 폰트 지정
+		jtfName.setFont(fontJtf);
+		jtfEmail.setFont(fontJtf);
+		jtfTel.setFont(fontJtf);
+		jtfCard.setFont(fontJtf);
+		jtfAddr.setFont(fontJtf);
 
 		// 버튼
 		jbtnModify = new JButton("내 정보 수정");
@@ -97,11 +115,11 @@ public class ModifyUserInfoDesign extends JDialog {
 		jpNorth.add(jlTitle);
 
 		// 각 패널 여백
-		jpName.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));// 상좌하우 여백
-		jpEmail.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 11));// 상좌하우 여백
-		jpTel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 12));// 상좌하우 여백
-		jpCard.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 13));// 상좌하우 여백
-		jpAddr.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 14));// 상좌하우 여백
+		jpName.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
+		jpEmail.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
+		jpTel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
+		jpCard.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
+		jpAddr.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
 
 		// name 패널 배치
 		jpName.add(jlName);
@@ -162,6 +180,11 @@ public class ModifyUserInfoDesign extends JDialog {
 		add("North", jpNorth);
 		add("Center", jsp);
 		add("South", jpSouth);
+		
+		//이벤트 리스너 등록
+		ModifyUserInfoEvt muie = new ModifyUserInfoEvt(this);
+		jbtnModify.addActionListener(muie);
+		
 
 		// 창 설정
 		setBounds(umd.getX() + 30, umd.getY() + 30, umd.getWidth() - 50, umd.getHeight() + 100); // 부모좌표를 가져올 수 있음.

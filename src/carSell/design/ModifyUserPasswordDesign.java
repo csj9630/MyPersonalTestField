@@ -10,14 +10,16 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import carSell.event.ModifyUserInfoEvt;
+import carSell.event.ModifyUserPasswordEvt;
 
 public class ModifyUserPasswordDesign extends JDialog {
 
-	private JTextField jtfPw, jtfNewPw, jtfNewPwCheck;
+	private JPasswordField jtfPw, jtfNewPw, jtfNewPwCheck;
 	private JLabel jlWrnPw, jlWrnNewPw, jlWrnNewPwCheck;
 	private JButton jbtnModify;
 
@@ -47,14 +49,21 @@ public class ModifyUserPasswordDesign extends JDialog {
 		jlWrnPw = new JLabel("이전 비밀번호를 잘못 입력하셨습니다.");
 		jlWrnNewPw = new JLabel("총 8자 이상, 영문/숫자/득수문자 중 2가지 이상 입력해주세요.");
 		jlWrnNewPwCheck = new JLabel("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+		
+		//경고 라벨 폰트색
 		jlWrnPw.setForeground(Color.red);
 		jlWrnNewPw.setForeground(Color.red);
 		jlWrnNewPwCheck.setForeground(Color.red);
+		
+		//경고 라벨 안 보이게
+		jlWrnPw.setVisible(false);
+		jlWrnNewPw.setVisible(false);
+		jlWrnNewPwCheck.setVisible(false);
 
 		// 텍스트필드
-		jtfPw = new JTextField("");
-		jtfNewPw = new JTextField("");
-		jtfNewPwCheck = new JTextField("");
+		jtfPw = new JPasswordField("");
+		jtfNewPw = new JPasswordField("");
+		jtfNewPwCheck = new JPasswordField("");
 
 		// 버튼
 		jbtnModify = new JButton("비밀번호 수정");
@@ -133,21 +142,25 @@ public class ModifyUserPasswordDesign extends JDialog {
 		add("Center", jsp);
 		add("South", jpSouth);
 
+		//이벤트 리스너 등록
+		ModifyUserPasswordEvt mupe = new ModifyUserPasswordEvt(this);
+		jbtnModify.addActionListener(mupe);
+		
 		// 창 설정
 		setBounds(umd.getX() + 30, umd.getY() + 30, umd.getWidth() - 50, umd.getHeight() + 100); // 부모좌표를 가져올 수 있음.
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}// ModifyUserInfoDesign
 
-	public JTextField getJtfPw() {
+	public JPasswordField getJtfPw() {
 		return jtfPw;
 	}
 
-	public JTextField getJtfNewPw() {
+	public JPasswordField getJtfNewPw() {
 		return jtfNewPw;
 	}
 
-	public JTextField getJtfNewPwCheck() {
+	public JPasswordField getJtfNewPwCheck() {
 		return jtfNewPwCheck;
 	}
 
