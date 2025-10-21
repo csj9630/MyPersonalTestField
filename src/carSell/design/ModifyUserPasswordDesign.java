@@ -19,7 +19,7 @@ import carSell.event.ModifyUserPasswordEvt;
 
 public class ModifyUserPasswordDesign extends JDialog {
 
-	private JPasswordField jtfPw, jtfNewPw, jtfNewPwCheck;
+	private JPasswordField jpfPw, jpfNewPw, jpfNewPwCheck;
 	private JLabel jlWrnPw, jlWrnNewPw, jlWrnNewPwCheck;
 	private JButton jbtnModify;
 
@@ -46,9 +46,9 @@ public class ModifyUserPasswordDesign extends JDialog {
 		jlNewPwCheck.setFont(fontTxtLabel);
 
 		// 경고 라벨
-		jlWrnPw = new JLabel("이전 비밀번호를 잘못 입력하셨습니다.");
-		jlWrnNewPw = new JLabel("총 8자 이상, 영문/숫자/득수문자 중 2가지 이상 입력해주세요.");
-		jlWrnNewPwCheck = new JLabel("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+		jlWrnPw = new JLabel("비번 경고1");
+		jlWrnNewPw = new JLabel("비번 경고2");
+		jlWrnNewPwCheck = new JLabel("비번 경고3");
 		
 		//경고 라벨 폰트색
 		jlWrnPw.setForeground(Color.red);
@@ -61,9 +61,9 @@ public class ModifyUserPasswordDesign extends JDialog {
 		jlWrnNewPwCheck.setVisible(false);
 
 		// 텍스트필드
-		jtfPw = new JPasswordField("");
-		jtfNewPw = new JPasswordField("");
-		jtfNewPwCheck = new JPasswordField("");
+		jpfPw = new JPasswordField("");
+		jpfNewPw = new JPasswordField("");
+		jpfNewPwCheck = new JPasswordField("");
 
 		// 버튼
 		jbtnModify = new JButton("비밀번호 수정");
@@ -101,21 +101,21 @@ public class ModifyUserPasswordDesign extends JDialog {
 
 		// jlPw 패널 배치
 		jpPw.add(jlPw);
-		jpPw.add(jtfPw);
+		jpPw.add(jpfPw);
 		jpPw.add(jlWrnPw);
 //				jpPw.setSize(100, 100);
 		jpCenter.add(jpPw);
 
 		// jlNewPw 패널 배치
 		jpNewPw.add(jlNewPw);
-		jpNewPw.add(jtfNewPw);
+		jpNewPw.add(jpfNewPw);
 		jpNewPw.add(jlWrnNewPw);
 
 		jpCenter.add(jpNewPw);
 
 		// jlNewPwCheck 패널 배치
 		jpNewPwCheck.add(jlNewPwCheck);
-		jpNewPwCheck.add(jtfNewPwCheck);
+		jpNewPwCheck.add(jpfNewPwCheck);
 		jpNewPwCheck.add(jlWrnNewPwCheck);
 		jpCenter.add(jpNewPwCheck);
 
@@ -152,16 +152,16 @@ public class ModifyUserPasswordDesign extends JDialog {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}// ModifyUserInfoDesign
 
-	public JPasswordField getJtfPw() {
-		return jtfPw;
+	public JPasswordField getJpfPw() {
+		return jpfPw;
 	}
 
-	public JPasswordField getJtfNewPw() {
-		return jtfNewPw;
+	public JPasswordField getJpfNewPw() {
+		return jpfNewPw;
 	}
 
-	public JPasswordField getJtfNewPwCheck() {
-		return jtfNewPwCheck;
+	public JPasswordField getJpfNewPwCheck() {
+		return jpfNewPwCheck;
 	}
 
 	public JLabel getJlWrnPw() {
