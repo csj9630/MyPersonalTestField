@@ -88,16 +88,16 @@ public class ModifyUserPasswordDesign extends JDialog {
 		jpNewPw.setLayout(new GridLayout(3, 1));
 		jpNewPwCheck.setLayout(new GridLayout(3, 1));
 
-		// 5개의 패널을 center 패널에 삽입.
-		jpCenter.setLayout(new GridLayout(5, 1));
+		// 3개의 패널을 center 패널에 삽입.
+		jpCenter.setLayout(new GridLayout(3, 1));
 
 		// 타이틀 배치
 		jpNorth.add(jlTitle);
 
 		// 각 패널 여백
-		jpPw.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));// 상좌하우 여백
-		jpNewPw.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 11));// 상좌하우 여백
-		jpNewPwCheck.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 12));// 상좌하우 여백
+		jpPw.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));// 상좌하우 여백
+		jpNewPw.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));// 상좌하우 여백
+		jpNewPwCheck.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));// 상좌하우 여백
 
 		// jlPw 패널 배치
 		jpPw.add(jlPw);
@@ -122,8 +122,7 @@ public class ModifyUserPasswordDesign extends JDialog {
 		// 버튼 배치
 		jpSouth.add(jbtnModify);
 
-		// South 패널 크기 지정
-		jpSouth.setSize(this.getWidth(), 100);
+
 
 		// 배경색깔
 		jpPw.setBackground(Color.white);
@@ -135,11 +134,12 @@ public class ModifyUserPasswordDesign extends JDialog {
 
 		// 스크롤 패널을 center에 삽입
 		// 스크롤 패널 생성
-		JScrollPane jsp = new JScrollPane(jpCenter);
+//		JScrollPane jsp = new JScrollPane(jpCenter);
 
 		// north, center 패널 배치
 		add("North", jpNorth);
-		add("Center", jsp);
+//		add("Center", jsp);
+		add("Center", jpCenter);
 		add("South", jpSouth);
 
 		//이벤트 리스너 등록
@@ -147,7 +147,7 @@ public class ModifyUserPasswordDesign extends JDialog {
 		jbtnModify.addActionListener(mupe);
 		
 		// 창 설정
-		setBounds(umd.getX() + 30, umd.getY() + 30, umd.getWidth() - 50, umd.getHeight() + 100); // 부모좌표를 가져올 수 있음.
+		setBounds(umd.getX() + 30, umd.getY() + 30, umd.getWidth() - 100, umd.getHeight()); // 부모좌표를 가져올 수 있음.
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}// ModifyUserInfoDesign

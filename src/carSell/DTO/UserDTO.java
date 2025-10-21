@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class UserDTO {
 
+
 	private int user_code;				
 	private String id, pass, name, email, tel,address, card_num ;
 	private Date generate_date;
@@ -72,6 +73,14 @@ public class UserDTO {
 		this.status_activate = status_activate;
 	}
 
+	public String getCard_num() {
+		return card_num;
+	}
+
+
+	public void setCard_num(String card_num) {
+		this.card_num = card_num;
+	}
 	
 	
 }//class

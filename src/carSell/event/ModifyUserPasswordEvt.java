@@ -14,7 +14,6 @@ import carSell.function.ModifyUserPasswordFunction;
 /**
  * 비밀번호 수정 페이지의 이벤트 클래스.<br>
  * 일단 암호화는 상정하지 않음<br>
- * 비번 체크 로직은 따로 만들어야할 듯.<br>
  */
 public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListener {
 	private ModifyUserPasswordDesign mpd;
@@ -31,27 +30,28 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == mpd.getJbtnModify()) {
-			getPasswordField();
-			warningSet(false);
+			getPasswordField(); //패스워드 필드의 String을 인스턴스 변수로 저장.
+			warningSet(false);//경고 문구 전부 끔
 
-			if (!jtfEmptyWarning()) {
+
+			//공백, 이전 비번 틀림, 새 비번 불일치 시 Early Return
+			if (!jtfEmptyWarning() || !pwCheck() || !newPwCheck()) {
 				return;
 			} // end if;
+
+			warningSet(false);//경고 문구 전부 끔
 			
-			if(!pwCheck()) {
+			//'확인' 외의 버튼이면 Early Return
+			if (!(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(mpd, "비밀번호를 변경하시겠습니까?"))) {
 				return;
-			}//end if
-			if(!newPwCheck()) {
-				return;
-			}//end if
+			} // end if
 			
+			//DB 저장 파트
+			saveModifiedPW();
 			
-			warningSet(false);
-//			mpd.getJbtnModify().setText("통과");
-			if(!(JOptionPane.OK_OPTION== JOptionPane.showConfirmDialog(mpd, "비밀번호를 변경하시겠습니까?"))) {
-				return;
-			}//end if
 			JOptionPane.showMessageDialog(mpd, "비밀번호가 변경되었습니다.");
+			jpfClean();//비번 정보 삭제
+			mpd.dispose();//화면 닫기
 		} // end if
 	}// actionPerformed
 
@@ -78,7 +78,6 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 
 	/**
 	 * 액션 시 텍스트필드가 비어 있으면 경고문 JLabel을 보이게 함.<br>
-	 * getPassword()은 char[]을 Return 하므로 toString<br>
 	 */
 	public boolean jtfEmptyWarning() {
 		boolean flag = true;
@@ -110,16 +109,25 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		return flag;
 	}// jtfEmptyWarning
 
+	/**
+	 * 비번 변경에 쓴 모든 정보를 삭제함.
+	 */
 	public void jpfClean() {
 		mpd.getJpfPw().setText("");
 		mpd.getJpfNewPw().setText("");
 		mpd.getJpfNewPwCheck().setText("");
+		
+		pwCurrent = "";
+		pwNew ="";
+		pwNewCheck = "";
 	}// jpfClean
 
+
+	
 	/**
-	 * 모든 경고문을 보이게 하거나, 안 보이게.
+	 * 모든 경고문을 보이게 하거나, 안 보이게 한다.
 	 * 
-	 * @param flag
+	 * @param flag true일 때 경고문 표시.
 	 */
 	public void warningSet(boolean flag) {
 		wrnPW.setVisible(flag);
@@ -127,11 +135,14 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		wrnPwCheck.setVisible(flag);
 	}// warningSet
 
+	/**
+	 * 이전 패스워드와 일치하는지 체크.
+	 * @return 일치하면 true 리턴.
+	 */
 	public boolean pwCheck() {
 		boolean flag = false;
 
 		if (testpw.equals(pwCurrent)) {
-//			JOptionPane.showMessageDialog(mpd, "일치합니다.");
 			wrnPW.setVisible(false);
 			flag = true;
 		} else {
@@ -142,6 +153,10 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		return flag;
 	}// pwCheck
 
+	/**
+	 * 새 비번, 새 비번 확인이 일치하는지 체크.
+	 * @return 일치하면 true 리턴.
+	 */
 	public boolean newPwCheck() {
 		boolean flag = false;
 
@@ -155,4 +170,8 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		} // end else
 		return flag;
 	}// pwCheck
+	
+	public void saveModifiedPW() {
+		System.out.println("new Password : "+pwNew); // 여기서 DB에 저장.
+	}
 }// class

@@ -3,23 +3,29 @@ package carSell.design;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import carSell.event.ModifyUserInfoEvt;
 
 public class ModifyUserInfoDesign extends JDialog {
 
-	private JTextField jtfName, jtfEmail, jtfTel, jtfCard, jtfAddr;
+//	private JTextField jtfName, jtfEmail, jtfTel, jtfCard, jtfAddr;
+	private JTextField jtfName, jtfEmail, jtfAddr;
 	private JLabel jlWrnName, jlWrnEmail, jlWrnTel, jlWrnCard, jlWrnAddr;
 	private JButton jbtnModify;
+	
+	private JFormattedTextField jtfTel, jtfCard;
 
 	public ModifyUserInfoDesign(UserMenuDesign umd, boolean modal) {
 		super(umd, "내 정보 수정", modal);
@@ -71,23 +77,43 @@ public class ModifyUserInfoDesign extends JDialog {
 		// 텍스트필드
 		jtfName = new JTextField("김철수");
 		jtfEmail = new JTextField("javaSist@naver.com");
-		jtfTel = new JTextField("010-1234-5678");
-		jtfCard = new JTextField("1234-****-****-7896");
+//		jtfTel = new JTextField("010-1234-5678");
+//		jtfCard = new JTextField("1234-****-****-7896");
 		jtfAddr = new JTextField("강남시 영통구 우환동 국민로12번길 504-1");
 		
+
+		//텍스트필드에 숫자 입력만 가능하게 제한
+		
+		//텍스트필드 입력 마스크
+//		jtfTel = null;
+		
+		try {
+			MaskFormatter formatTel = new MaskFormatter("###  -  ####  -  ####");
+			MaskFormatter formatCard = new MaskFormatter("####  -  ####  -  ####  -  ####");
+			jtfTel = new JFormattedTextField(formatTel);
+			jtfTel.setColumns(20);
+			jtfCard = new JFormattedTextField(formatCard);
+			jtfCard.setColumns(20);
+		}catch(ParseException e1) {
+			e1.printStackTrace();
+		}//end catch
+		
+
 		//텍스트필드 폰트 지정
 		jtfName.setFont(fontJtf);
 		jtfEmail.setFont(fontJtf);
 		jtfTel.setFont(fontJtf);
 		jtfCard.setFont(fontJtf);
 		jtfAddr.setFont(fontJtf);
-
+		
+		
+		
 		// 버튼
 		jbtnModify = new JButton("내 정보 수정");
 		jbtnModify.setFont(fontBtn);
 		jbtnModify.setForeground(Color.white);
 		jbtnModify.setBackground(new Color(37, 157, 237));
-		jbtnModify.setSize(this.WIDTH, 60);
+		jbtnModify.setSize(this.getWidth(), 60);
 
 		// 패널
 		JPanel jpNorth = new JPanel();
@@ -171,6 +197,10 @@ public class ModifyUserInfoDesign extends JDialog {
 		jpAddr.setBackground(Color.white);
 		jpCenter.setBackground(Color.white);
 		jpNorth.setBackground(Color.white);
+		
+		
+	
+		
 
 		// 스크롤 패널을 center에 삽입
 		// 스크롤 패널 생성
@@ -185,7 +215,9 @@ public class ModifyUserInfoDesign extends JDialog {
 		ModifyUserInfoEvt muie = new ModifyUserInfoEvt(this);
 		jbtnModify.addActionListener(muie);
 		
+		
 
+		
 		// 창 설정
 		setBounds(umd.getX() + 30, umd.getY() + 30, umd.getWidth() - 50, umd.getHeight() + 100); // 부모좌표를 가져올 수 있음.
 		setVisible(true);
@@ -201,11 +233,14 @@ public class ModifyUserInfoDesign extends JDialog {
 		return jtfEmail;
 	}
 
-	public JTextField getJtfTel() {
+//	public JTextField getJtfTel() {
+//		return jtfTel;
+//	}
+	public JFormattedTextField getJtfTel() {
 		return jtfTel;
 	}
 
-	public JTextField getJtfCard() {
+	public JFormattedTextField getJtfCard() {
 		return jtfCard;
 	}
 
