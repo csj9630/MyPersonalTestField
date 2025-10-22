@@ -22,6 +22,8 @@ import carSell.function.ModifyUserFunction;
 public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	private ModifyUserInfoDesign mud;
 	private ModifyUserFunction muf;
+	private UserService us;
+	private UserDTO uDTO;
 
 	private boolean btnFlag = false;
 
@@ -31,9 +33,11 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	public ModifyUserInfoEvt(ModifyUserInfoDesign mud) {
 		this.mud = mud;
 		this.muf = new ModifyUserFunction(mud);
+		this.us = new UserService();
+		
 		editFlag(false, UNEDITABLE);
 		int user_code = 1;
-		loadUserInfo(user_code);
+		loadUserInfo(user_code);//이 때 uDTO에 select한 정보 저장.
 
 	}// ModifyUserInfoEvt
 
@@ -42,6 +46,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		if (ae.getSource() == mud.getJbtnModify()) {
 			if (btnFlag == false) {
 				enterEditMode();
+				setTextForTest();//테스트용 값 넣기
 			} else {
 				if (!jtfEmptyWarning()) {
 					return;
@@ -79,7 +84,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		warningSet(false);
 
 		// DB 저장 로직 자리
-		saveUserInfo();
+		modfiyUserInfo();
 
 		mud.getJbtnModify().setText("내 정보 수정");
 		mud.getJbtnModify().setBackground(new Color(37, 157, 237));// 버튼색 바꿈
@@ -110,7 +115,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		} // end else
 
 //		if (mud.getJtfTel().getText().isEmpty()) {
-		if (mud.getJtfTel().getText().equals("     -        -      ")) {
+		if (mud.getJtfTel().getText().equals("   -    -    ")) {
 			mud.getJlWrngTel().setVisible(true);
 			flag = false;
 		} else {
@@ -118,7 +123,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		} // end else
 
 //		if (mud.getJtfCard().getText().isEmpty()) {
-		if (mud.getJtfCard().getText().equals("      -        -        -      ")) {
+		if (mud.getJtfCard().getText().equals("    -    -    -    ")) {
 			mud.getJlWrnCard().setVisible(true);
 			flag = false;
 		} else {
@@ -188,22 +193,38 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		}
 		return cardNo;
 	}// cardMasking
+	
+	/**
+	 * 테스트할 때 쓸 임시 데이터.
+	 * 수정할 때 바로 덮어씌운다.
+	 */
+	public void setTextForTest() {
+		
+		mud.getJtfName().setText("김정민");
+		mud.getJtfEmail().setText("modify@info.com");
+		mud.getJtfTel().setText("010-9999-9999");
+//		mud.getJtfCard().setText(uDTO.getCard_num());
+//		mud.getJtfCard().setText("9999-9999-9999-9999");
+		mud.getJtfAddr().setText("충청남도 서천군 종천면 희리산길 9-40 33612 한국");
+		
+		
+	}// loadUserInfo
 
 	// ----------DB 로직--------------------------------------------------------
 	/**
 	 * DB 데이터를 텍스트필드에 불러온다.
 	 * select one 사용
+	 * 
 	 */
 	public void loadUserInfo(int user_code) {
-		UserDTO uDTO = new UserDTO();
-		UserService us = new UserService();
+//		UserDTO uDTO = new UserDTO();
 		uDTO = us.searchOneUser(user_code);
 		
 		mud.getJtfName().setText(uDTO.getName());
 		mud.getJtfEmail().setText(uDTO.getEmail());
 		mud.getJtfTel().setText(uDTO.getTel());
 //		mud.getJtfCard().setText(uDTO.getCard_num());
-		mud.getJtfCard().setText("9999-9999-9999-9999");
+		mud.getJtfCard().setText("카드번호는 미구현");
 		mud.getJtfAddr().setText(uDTO.getAddress());
 		
 		
@@ -212,18 +233,39 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	/**
 	 * 텍스트필드의 정보를 DB에 저장한다.
 	 */
-	public void saveUserInfo() {
-		UserDTO uDTO = new UserDTO();
+	public void modfiyUserInfo() {
+		
+		//텍스트 필드값을 DTO에 저장.
 		uDTO.setName(mud.getJtfName().getText());
 		uDTO.setEmail(mud.getJtfEmail().getText());
 		uDTO.setTel(mud.getJtfTel().getText());
 		uDTO.setCard_num(mud.getJtfCard().getText());
 		uDTO.setAddress(mud.getJtfAddr().getText());
 		
-		System.out.println(uDTO);
+		//DB로 Update할 SQL문 set
+		int flag = us.modifyUser(uDTO);
+		String outputMsg = "문제가 발생하였습니다. 잠시 후 다시 시도해주세요";
+		System.out.println(flag);
+		switch (flag) {
+		case 0:
+			
+			break;
+		// 일단 num은 사용자 시점에서 변경이 안되니 현 상황에선 나오기 어렵다.
+		case 1:
+			outputMsg = uDTO.getName() + "님의 회원정보를 변경하였습니다.";
+			break;
+		case 2:
+			outputMsg = "sql문제";
+			break;
+		}// end switch
 		
-		JOptionPane.showMessageDialog(mud, "사용자 정보를 저장했습니다");
+		
+//		System.out.println(uDTO);
+		
+		JOptionPane.showMessageDialog(mud, outputMsg);
 	}// saveUserInfo
+	
+
 
 	
 

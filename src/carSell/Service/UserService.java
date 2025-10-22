@@ -37,8 +37,8 @@ public class UserService {
 		UserDTO uDTO = null;
 		
 		try {
-			UserDAO dao = UserDAO.getInstance(); 
-			uDTO = dao.selectOneUser(user_code);
+			UserDAO uDAO = UserDAO.getInstance(); 
+			uDTO = uDAO.selectOneUser(user_code);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,7 +53,15 @@ public class UserService {
 
 	public int modifyUser(UserDTO uDTO) {
 		int flag = 0;
-
+		try {
+			UserDAO uDAO = UserDAO.getInstance(); 
+			flag = uDAO.updateUser(uDTO);
+		} catch (SQLException e) {
+			flag=2;
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} // end catch
 
 		return flag;
 	}// modifyUser

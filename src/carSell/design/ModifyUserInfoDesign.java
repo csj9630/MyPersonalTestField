@@ -88,8 +88,8 @@ public class ModifyUserInfoDesign extends JDialog {
 //		jtfTel = null;
 		
 		try {
-			MaskFormatter formatTel = new MaskFormatter("###  -  ####  -  ####");
-			MaskFormatter formatCard = new MaskFormatter("####  -  ####  -  ####  -  ####");
+			MaskFormatter formatTel = new MaskFormatter("###-####-####");
+			MaskFormatter formatCard = new MaskFormatter("####-####-####-####");
 			jtfTel = new JFormattedTextField(formatTel);
 			jtfTel.setColumns(20);
 			jtfCard = new JFormattedTextField(formatCard);

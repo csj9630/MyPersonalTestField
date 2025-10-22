@@ -47,9 +47,49 @@ public class UserDAO {
 		return rowCnt;
 	}// insertUser
 
-	public int updateUser(UserDTO uDTO) {
+	public int updateUser(UserDTO uDTO) throws SQLException, IOException{
 		int flag = 0;
+		
+		GetConnection gc = GetConnection.getInstance();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			// 1.드라이버 로딩+2.커넥션 얻기
+			con = gc.getConn();
+			// 3. 쿼리문 생성 객체 얻기
 
+			// 이걸 StringBuilder로 하기
+			StringBuilder updateUser = new StringBuilder();
+
+			//@formatter:off
+					
+			//회원번호를 사용하여 나이, 전화번호 변경
+			updateUser
+				.append("		update	user_info ")
+				.append("		set 	name=?, email=?, tel=?, address=? ")
+				.append("		where	user_code=? ");
+			//@formatter:on
+
+			pstmt = con.prepareStatement(updateUser.toString());
+
+			// 4. 바인드변수에 값 설정
+			pstmt.setString(1, uDTO.getName());
+			pstmt.setString(2, uDTO.getEmail());
+			pstmt.setString(3, uDTO.getTel());
+			pstmt.setString(4, uDTO.getAddress());
+			pstmt.setInt(5, uDTO.getUser_code());
+
+			System.out.println(uDTO);
+			System.out.println(pstmt);
+			// 5. 쿼리문 수행 후 결과 얻기
+			flag = pstmt.executeUpdate();// 변경한 행의 수가 리턴
+
+		} finally {
+			// 5. 연결 끊기
+			gc.dbClose(con, pstmt, null);
+		} // end finally
+		
 		return flag;
 	}// updateUser
 
@@ -92,7 +132,6 @@ public class UserDAO {
 				uDTO.setUser_code(user_code);
 				
 				uDTO.setId(rs.getString("id"));
-
 				uDTO.setPass(rs.getString("pass"));
 				uDTO.setName(rs.getString("name"));
 				uDTO.setEmail(rs.getString("email"));
