@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 import carSell.DTO.UserDTO;
+import carSell.Service.UserService;
 import carSell.design.ModifyUserInfoDesign;
 import carSell.function.ModifyUserFunction;
 
@@ -31,7 +32,8 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		this.mud = mud;
 		this.muf = new ModifyUserFunction(mud);
 		editFlag(false, UNEDITABLE);
-//		mud.getJtfCard().setText(cardMasking("1234-4567-8978-7893"));
+		int user_code = 1;
+		loadUserInfo(user_code);
 
 	}// ModifyUserInfoEvt
 
@@ -188,6 +190,24 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	}// cardMasking
 
 	// ----------DB 로직--------------------------------------------------------
+	/**
+	 * DB 데이터를 텍스트필드에 불러온다.
+	 * select one 사용
+	 */
+	public void loadUserInfo(int user_code) {
+		UserDTO uDTO = new UserDTO();
+		UserService us = new UserService();
+		uDTO = us.searchOneUser(user_code);
+		
+		mud.getJtfName().setText(uDTO.getName());
+		mud.getJtfEmail().setText(uDTO.getEmail());
+		mud.getJtfTel().setText(uDTO.getTel());
+//		mud.getJtfCard().setText(uDTO.getCard_num());
+		mud.getJtfCard().setText("9999-9999-9999-9999");
+		mud.getJtfAddr().setText(uDTO.getAddress());
+		
+		
+	}// loadUserInfo
 
 	/**
 	 * 텍스트필드의 정보를 DB에 저장한다.
@@ -204,5 +224,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		
 		JOptionPane.showMessageDialog(mud, "사용자 정보를 저장했습니다");
 	}// saveUserInfo
+
+	
 
 }// class

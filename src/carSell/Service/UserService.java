@@ -1,19 +1,24 @@
 package carSell.Service;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
+import carSell.DAO.UserDAO;
 import carSell.DTO.UserDTO;
+import pstmt.PstmtMemberDAO;
 
 
 
 public class UserService {
 	public UserService() {
+		super();
 	} // UserService
 
 
 	public boolean addUser(UserDTO uDTO) {
 		boolean flag = false;// 기본은 실패 상태
-
+		
 
 		return flag;
 	}// addUser
@@ -28,9 +33,19 @@ public class UserService {
 	}// searchAllUser
 
 
-	public UserDTO searchOneUser(int num) {
+	public UserDTO searchOneUser(int user_code) {
 		UserDTO uDTO = null;
-	
+		
+		try {
+			UserDAO dao = UserDAO.getInstance(); 
+			uDTO = dao.selectOneUser(user_code);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//end catch
 
 		return uDTO;
 	}// searchOneUser

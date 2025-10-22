@@ -271,6 +271,8 @@ public class ModifyUserInfoDesign extends JDialog {
 	public JButton getJbtnModify() {
 		return jbtnModify;
 	}
+	
+	
 
 	public static void main(String[] args) {
 		new ModifyUserInfoDesign(new UserMenuDesign(), true);
