@@ -203,7 +203,6 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		mud.getJtfName().setText("김정민");
 		mud.getJtfEmail().setText("modify@info.com");
 		mud.getJtfTel().setText("010-9999-9999");
-//		mud.getJtfCard().setText(uDTO.getCard_num());
 //		mud.getJtfCard().setText("9999-9999-9999-9999");
 		mud.getJtfAddr().setText("충청남도 서천군 종천면 희리산길 9-40 33612 한국");
 		
