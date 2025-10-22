@@ -15,6 +15,9 @@ import carSell.DTO.UserDTO;
 import carSell.design.ModifyUserInfoDesign;
 import carSell.function.ModifyUserFunction;
 
+/**
+ * 비번 수정 이벤트
+ */
 public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	private ModifyUserInfoDesign mud;
 	private ModifyUserFunction muf;
