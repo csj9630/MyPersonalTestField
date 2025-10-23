@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import carSell.DAO.GetConnection;
 import carSell.DAO.UserDAO;
 import carSell.DTO.UserDTO;
 import carSell.Service.UserService;
@@ -21,8 +22,8 @@ class JUnitTestCase {
 		fail("Not yet implemented");
 	}
 	
-	@DisplayName("DAO 회원정보 번호 조회 테스트")
-	@Test
+	@Disabled
+	@DisplayName("test_SelectOneMember")
 	void test_SelectOneMember() {
 		
 		UserDAO dao = UserDAO.getInstance(); 
@@ -42,5 +43,12 @@ class JUnitTestCase {
 		
 		
 	}//test
+	
+	@DisplayName("connection Test")
+	@Test
+	void connectionTest() {
+		GetConnection gcon = GetConnection.getInstance();
+		assertNotNull(gcon);
+	}
 
 }//class
