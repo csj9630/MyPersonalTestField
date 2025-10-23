@@ -60,20 +60,20 @@ ADDRESS, GENERATE_DATE, STATUS_ACTIVATE)
 values(SEQ_USER_INFO.nextval, 'testId', '1234', '이정우',
 'lee@test.com', '010-1111-2222', '서울시 강남구', sysdate, 'Y');
 
---insert into USER_INFO(USER_CODE, ID, PASS, name, EMAIL, TEL,
---ADDRESS, GENERATE_DATE, STATUS_ACTIVATE)
---values(SEQ_USER_INFO.nextval, 'testId2', 'user2', '박민수',
---'tmujkl@imgfree.com', '010-3432-9787', '수원시 영통구', sysdate, 'Y');
---
---insert into USER_INFO(USER_CODE, ID, PASS, name, EMAIL, TEL,
---ADDRESS, GENERATE_DATE, STATUS_ACTIVATE)
---values(SEQ_USER_INFO.nextval, 'testId3', 'user3', '김나은',
---'mta5jkud@concu.net', '010-9879-6755', '부천시 양남구', sysdate, 'Y');
---
---insert into USER_INFO(USER_CODE, ID, PASS, name, EMAIL, TEL,
---ADDRESS, GENERATE_DATE, STATUS_ACTIVATE)
---values(SEQ_USER_INFO.nextval, 'testId4', 'user4', '성진우',
---'az8bhvf@cdnripple.com', '010-7765-1158', '성남시 자켈구', sysdate, 'Y');
+insert into USER_INFO(USER_CODE, ID, PASS, name, EMAIL, TEL,
+ADDRESS, GENERATE_DATE, STATUS_ACTIVATE)
+values(SEQ_USER_INFO.nextval, 'testId2', 'user2', '박민수',
+'tmujkl@imgfree.com', '010-3432-9787', '수원시 영통구', sysdate, 'Y');
+
+insert into USER_INFO(USER_CODE, ID, PASS, name, EMAIL, TEL,
+ADDRESS, GENERATE_DATE, STATUS_ACTIVATE)
+values(SEQ_USER_INFO.nextval, 'testId3', 'user3', '김나은',
+'mta5jkud@concu.net', '010-9879-6755', '부천시 양남구', sysdate, 'Y');
+
+insert into USER_INFO(USER_CODE, ID, PASS, name, EMAIL, TEL,
+ADDRESS, GENERATE_DATE, STATUS_ACTIVATE)
+values(SEQ_USER_INFO.nextval, 'testId4', 'user4', '성진우',
+'az8bhvf@cdnripple.com', '010-7765-1158', '성남시 자켈구', sysdate, 'Y');
 
 --사용자 정보 조회
 --SELECT * FROM USER_INFO;

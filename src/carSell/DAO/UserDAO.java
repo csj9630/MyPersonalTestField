@@ -26,6 +26,58 @@ public class UserDAO {
 		} // end if
 		return pstmt_uDAO;
 	}// getInstance
+	
+	public UserDTO selectOneUser(int user_code) throws SQLException, IOException {
+		UserDTO uDTO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		GetConnection gc = GetConnection.getInstance();
+		
+		try {
+			con = gc.getConn();
+			
+			
+			//ㅁ 쿼리문 세팅 및 생성 객체 얻기
+			String selectOneUser = 
+					" select user_code, id,pass,name,email,tel,address,generate_date,status_activate"
+							+ " from user_info "
+							+ " where user_code = ? ";
+			
+			pstmt = con.prepareStatement(selectOneUser);
+			
+			//ㅁ 바인드 변수 세팅
+			pstmt.setInt(1, user_code);
+			
+			//ㅁ 쿼리문 수행 후 결과 받기
+			rs = pstmt.executeQuery();
+			
+			
+			//조회 결과가 존재한다면, DTO에 넣기
+			if(rs.next()) {
+				uDTO = new UserDTO();
+				uDTO.setUser_code(user_code);
+				
+				uDTO.setId(rs.getString("id"));
+				uDTO.setPass(rs.getString("pass"));
+				uDTO.setName(rs.getString("name"));
+				uDTO.setEmail(rs.getString("email"));
+				uDTO.setTel(rs.getString("TEL"));
+				uDTO.setAddress (rs.getString("address"));
+				uDTO.setGenerate_date(rs.getDate("generate_date"));
+			}//end if
+			
+			
+			
+		} finally {
+			gc.dbClose(con, pstmt, rs);
+		} // end finally
+		
+		return uDTO;
+	}// selectOneUser
+
 
 	public int insertUser(UserDTO uDTO) throws SQLException, IOException {
 		int rowCnt = 0;
@@ -81,7 +133,6 @@ public class UserDAO {
 			pstmt.setInt(5, uDTO.getUser_code());
 
 			System.out.println(uDTO);
-			System.out.println(pstmt);
 			// 5. 쿼리문 수행 후 결과 얻기
 			flag = pstmt.executeUpdate();// 변경한 행의 수가 리턴
 
@@ -99,55 +150,6 @@ public class UserDAO {
 		return list;
 	}// selectAllUser
 
-	public UserDTO selectOneUser(int user_code) throws SQLException, IOException {
-		UserDTO uDTO = null;
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		GetConnection gc = GetConnection.getInstance();
-
-		try {
-			con = gc.getConn();
-			
-			
-			//ㅁ 쿼리문 세팅 및 생성 객체 얻기
-			String selectOneUser = 
-					" select user_code, id,pass,name,email,tel,address,generate_date,status_activate"
-					+ " from user_info "
-					+ " where user_code = ? ";
-			pstmt = con.prepareStatement(selectOneUser);
-			
-			//ㅁ 바인드 변수 세팅
-			pstmt.setInt(1, user_code);
-			
-			//ㅁ 쿼리문 수행 후 결과 받기
-			rs = pstmt.executeQuery();
-			
-			
-			//조회 결과가 존재한다면, DTO에 넣기
-			if(rs.next()) {
-				uDTO = new UserDTO();
-				uDTO.setUser_code(user_code);
-				
-				uDTO.setId(rs.getString("id"));
-				uDTO.setPass(rs.getString("pass"));
-				uDTO.setName(rs.getString("name"));
-				uDTO.setEmail(rs.getString("email"));
-				uDTO.setTel(rs.getString("TEL"));
-				uDTO.setAddress (rs.getString("address"));
-				uDTO.setGenerate_date(rs.getDate("generate_date"));
-			}//end if
-			
-			
-			
-		} finally {
-			gc.dbClose(con, pstmt, rs);
-		} // end finally
-
-		return uDTO;
-	}// selectOneUser
 
 //	public int deleteUser(int user_code) {
 //		int flag = 0;

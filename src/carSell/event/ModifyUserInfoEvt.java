@@ -234,6 +234,8 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	 */
 	public void modfiyUserInfo() {
 		
+		//uDTO.getUser_code는 “SELECT로 받은 DTO의 기본키(user_code)를 그대로 써서 UPDATE해야 한다.”
+		
 		//텍스트 필드값을 DTO에 저장.
 		uDTO.setName(mud.getJtfName().getText());
 		uDTO.setEmail(mud.getJtfEmail().getText());
@@ -254,7 +256,10 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 			outputMsg = uDTO.getName() + "님의 회원정보를 변경하였습니다.";
 			break;
 		case 2:
-			outputMsg = "sql문제";
+			System.err.println("SQL문이 잘못되었습니다.");
+			break;
+		case 3:
+			System.err.println("파일이 잘못되었습니다.");
 			break;
 		}// end switch
 		

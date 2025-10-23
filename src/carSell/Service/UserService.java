@@ -60,6 +60,7 @@ public class UserService {
 			flag=2;
 			e.printStackTrace();
 		} catch (IOException e) {
+			flag=3;
 			e.printStackTrace();
 		} // end catch
 

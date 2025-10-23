@@ -43,12 +43,28 @@ class JUnitTestCase {
 		
 		
 	}//test
-	
+	@Disabled
 	@DisplayName("connection Test")
 	@Test
 	void connectionTest() {
 		GetConnection gcon = GetConnection.getInstance();
 		assertNotNull(gcon);
+	}
+	
+	@DisplayName("Select subquery")
+	@Test
+	void subqueryTest() {
+		UserDAO dao =  UserDAO.getInstance(); 
+		try {
+			
+			System.out.println(dao.selectOneUser(1));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }//class
