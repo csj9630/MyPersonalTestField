@@ -28,29 +28,30 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 	public ModifyUserPasswordEvt(ModifyUserPasswordDesign mpd) {
 		this.mpd = mpd;
 		this.mpf = new ModifyUserPasswordFunction(mpd);
-		loadUserPw(user_code);
+		loadUserPw(user_code);// 사용자 비번을 불러와서 저장.
 	}// ModifyUserPasswordEvt
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == mpd.getJbtnModify()) {
-			getPasswordField(); // 패스워드 필드의 String을 인스턴스 변수로 저장.
-			warningSet(false);// 경고 문구 전부 끔
-			
+		if (ae.getSource() == mpd.getJbtnModify()) {// 버튼이 클릭되면
 
-			// 공백, 이전 비번 틀림, 새 비번 불일치 시 Early Return
+			getPasswordField(); // 패스워드 필드의 String을 인스턴스 변수로 저장.
+			warningSet(false);// 경고 문구 전부 비활성화
+
+			// 텍스트필드 공백, 이전 비번 틀림, 새 비번 불일치 시 Early Return
 			if (!jtfEmptyWarning() || !pwCheck() || !newPwCheck()) {
 				return;
 			} // end if;
 
-			warningSet(false);// 경고 문구 전부 끔
+			// 성공 시
+			warningSet(false);// 경고 문구 전부 비활성화
 
-			// '확인' 외의 버튼이면 Early Return
+			// 확인창을 열고, '확인' 외의 버튼이면 Early Return
 			if (!(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(mpd, "비밀번호를 변경하시겠습니까?"))) {
 				return;
 			} // end if
 
-			// DB 저장 파트
+			// 수정한 비번을 DB 저장하는 파트
 			saveModifiedPW();
 
 			JOptionPane.showMessageDialog(mpd, "비밀번호가 변경되었습니다.");
@@ -65,15 +66,18 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		super.windowClosing(e);
 	}// windowClosing
 
+//-----------------------------------------------------------------------	
 	/**
 	 * 디자인 클래스의 패스워드 필드를 가져와서 String 인스턴스 변수로 저장한다.<br>
 	 * 경고 문구용 J라벨이 자주 쓰이는 관계로 같이 가져왔다.<br>
 	 */
 	public void getPasswordField() {
+		//텍스트필드 값을 인스턴스 변수에 저장.
 		pwCurrent = new String(mpd.getJpfPw().getPassword());
 		pwNew = new String(mpd.getJpfNewPw().getPassword());
 		pwNewCheck = new String(mpd.getJpfNewPwCheck().getPassword());
 
+		//경고문구용 JLabel을 인스턴스 변수로 저장.
 		wrnPW = mpd.getJlWrnPw();
 		wrnPwNew = mpd.getJlWrnNewPw();
 		wrnPwCheck = mpd.getJlWrnNewPwCheck();
@@ -121,9 +125,11 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		mpd.getJpfNewPw().setText("");
 		mpd.getJpfNewPwCheck().setText("");
 
+		userPw = "";
 		pwCurrent = "";
 		pwNew = "";
 		pwNewCheck = "";
+
 	}// jpfClean
 
 	/**
@@ -136,7 +142,7 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		wrnPwNew.setVisible(flag);
 		wrnPwCheck.setVisible(flag);
 	}// warningSet
-
+	//-----------------------------------------------------------------------
 	/**
 	 * 이전 패스워드와 일치하는지 체크.
 	 * 
@@ -174,8 +180,14 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		} // end else
 		return flag;
 	}// pwCheck
-		// ----------DB 로직--------------------------------------------------------
 
+// ----------DB 로직--------------------------------------------------------
+
+	/**
+	 * DB에서 Select로 사용자 비번을 가져와서 저장함.
+	 * 
+	 * @param user_code
+	 */
 	private void loadUserPw(int user_code) {
 //		String userPw = "";
 		UserDTO uDTO = new UserService().searchOneUser(user_code);
@@ -187,6 +199,9 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 
 	}// loadUserPw
 
+	/**
+	 * 수정한 사용자 비번을 DB에 update로 저장함.
+	 */
 	public void saveModifiedPW() {
 		System.out.println("new Password : " + pwNew); // 여기서 DB에 저장.
 
@@ -208,5 +223,5 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 			System.err.println("파일이 잘못되었습니다.");
 			break;
 		}// end switch
-	}
+	}//saveModifiedPW
 }// class
