@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import carSell.DTO.UserDTO;
+import carSell.Service.UserService;
 import carSell.design.ModifyUserPasswordDesign;
 import carSell.function.ModifyUserPasswordFunction;
 
@@ -18,40 +20,42 @@ import carSell.function.ModifyUserPasswordFunction;
 public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListener {
 	private ModifyUserPasswordDesign mpd;
 	private ModifyUserPasswordFunction mpf;
-	private String testpw = "12345";// 테스트용 임시 비번.
 	private String pwCurrent, pwNew, pwNewCheck;
 	private JLabel wrnPW, wrnPwNew, wrnPwCheck;
+	private String userPw;// 사용자 비번
+	private int user_code = 1;// 사용자 식별 코드
 
 	public ModifyUserPasswordEvt(ModifyUserPasswordDesign mpd) {
 		this.mpd = mpd;
 		this.mpf = new ModifyUserPasswordFunction(mpd);
+		loadUserPw(user_code);
 	}// ModifyUserPasswordEvt
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == mpd.getJbtnModify()) {
-			getPasswordField(); //패스워드 필드의 String을 인스턴스 변수로 저장.
-			warningSet(false);//경고 문구 전부 끔
+			getPasswordField(); // 패스워드 필드의 String을 인스턴스 변수로 저장.
+			warningSet(false);// 경고 문구 전부 끔
+			
 
-
-			//공백, 이전 비번 틀림, 새 비번 불일치 시 Early Return
+			// 공백, 이전 비번 틀림, 새 비번 불일치 시 Early Return
 			if (!jtfEmptyWarning() || !pwCheck() || !newPwCheck()) {
 				return;
 			} // end if;
 
-			warningSet(false);//경고 문구 전부 끔
-			
-			//'확인' 외의 버튼이면 Early Return
+			warningSet(false);// 경고 문구 전부 끔
+
+			// '확인' 외의 버튼이면 Early Return
 			if (!(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(mpd, "비밀번호를 변경하시겠습니까?"))) {
 				return;
 			} // end if
-			
-			//DB 저장 파트
+
+			// DB 저장 파트
 			saveModifiedPW();
-			
+
 			JOptionPane.showMessageDialog(mpd, "비밀번호가 변경되었습니다.");
-			jpfClean();//비번 정보 삭제
-			mpd.dispose();//화면 닫기
+			jpfClean();// 비번 정보 삭제
+			mpd.dispose();// 화면 닫기
 		} // end if
 	}// actionPerformed
 
@@ -116,14 +120,12 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		mpd.getJpfPw().setText("");
 		mpd.getJpfNewPw().setText("");
 		mpd.getJpfNewPwCheck().setText("");
-		
+
 		pwCurrent = "";
-		pwNew ="";
+		pwNew = "";
 		pwNewCheck = "";
 	}// jpfClean
 
-
-	
 	/**
 	 * 모든 경고문을 보이게 하거나, 안 보이게 한다.
 	 * 
@@ -137,12 +139,13 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 
 	/**
 	 * 이전 패스워드와 일치하는지 체크.
+	 * 
 	 * @return 일치하면 true 리턴.
 	 */
 	public boolean pwCheck() {
 		boolean flag = false;
 
-		if (testpw.equals(pwCurrent)) {
+		if (userPw.equals(pwCurrent)) {
 			wrnPW.setVisible(false);
 			flag = true;
 		} else {
@@ -155,6 +158,7 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 
 	/**
 	 * 새 비번, 새 비번 확인이 일치하는지 체크.
+	 * 
 	 * @return 일치하면 true 리턴.
 	 */
 	public boolean newPwCheck() {
@@ -170,8 +174,39 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 		} // end else
 		return flag;
 	}// pwCheck
-	
+		// ----------DB 로직--------------------------------------------------------
+
+	private void loadUserPw(int user_code) {
+//		String userPw = "";
+		UserDTO uDTO = new UserService().searchOneUser(user_code);
+
+//		userPw = uDTO.getPass();
+		this.userPw = uDTO.getPass();
+
+//		return userPw;
+
+	}// loadUserPw
+
 	public void saveModifiedPW() {
-		System.out.println("new Password : "+pwNew); // 여기서 DB에 저장.
+		System.out.println("new Password : " + pwNew); // 여기서 DB에 저장.
+
+		int flag = new UserService().modifyPassword(user_code, pwNew);
+
+		String outputMsg = "문제가 발생하였습니다. 잠시 후 다시 시도해주세요";
+		switch (flag) {
+		case 0:
+			System.err.println("업데이트가 취소되었습니다.");
+			break;
+
+		case 1:
+			outputMsg = "비밀번호를 변경하였습니다.";
+			break;
+		case 2:
+			System.err.println("SQL문이 잘못되었습니다.");
+			break;
+		case 3:
+			System.err.println("파일이 잘못되었습니다.");
+			break;
+		}// end switch
 	}
 }// class

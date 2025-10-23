@@ -99,7 +99,6 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	 */
 	public boolean jtfEmptyWarning() {
 		boolean flag = true;
-		System.out.println(mud.getJtfCard().getText());
 		if (mud.getJtfName().getText().isEmpty()) {
 			mud.getJlWrnName().setVisible(true);
 			flag = false;
@@ -177,7 +176,12 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 
 	}// editFlag
 
-	// 카드번호 가운데 8자리 마스킹
+	// 
+	/**
+	 * 카드번호 가운데 8자리 마스킹, 현재 사용 안함
+	 * @param cardNo
+	 * @return
+	 */
 	public String cardMasking(String cardNo) {
 		// 카드번호 16자리 또는 15자리 '-'포함/미포함 상관없음
 		String regex = "(\\d{4})-?(\\d{4})-?(\\d{4})-?(\\d{3,4})$";
@@ -200,11 +204,11 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	 */
 	public void setTextForTest() {
 		
-		mud.getJtfName().setText("김정민");
-		mud.getJtfEmail().setText("modify@info.com");
-		mud.getJtfTel().setText("010-9999-9999");
-//		mud.getJtfCard().setText("9999-9999-9999-9999");
-		mud.getJtfAddr().setText("충청남도 서천군 종천면 희리산길 9-40 33612 한국");
+		mud.getJtfName().setText("asdf");
+		mud.getJtfEmail().setText("ssssss@info.com");
+		mud.getJtfTel().setText("010-5555-5555");
+		mud.getJtfCard().setText("5555-5555-5555-5555");
+		mud.getJtfAddr().setText("asdfg 서천군 종천면 희리산길 9-40 33612 한국");
 		
 		
 	}// loadUserInfo
@@ -222,8 +226,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		mud.getJtfName().setText(uDTO.getName());
 		mud.getJtfEmail().setText(uDTO.getEmail());
 		mud.getJtfTel().setText(uDTO.getTel());
-//		mud.getJtfCard().setText(uDTO.getCard_num());
-		mud.getJtfCard().setText("카드번호는 미구현");
+		mud.getJtfCard().setText(uDTO.getCard_num());
 		mud.getJtfAddr().setText(uDTO.getAddress());
 		
 		
@@ -246,31 +249,25 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		//DB로 Update할 SQL문 set
 		int flag = us.modifyUser(uDTO);
 		String outputMsg = "문제가 발생하였습니다. 잠시 후 다시 시도해주세요";
-		System.out.println(flag);
 		switch (flag) {
 		case 0:
-			
+			System.err.println("업데이트가 취소되었습니다.");
 			break;
 		// 일단 num은 사용자 시점에서 변경이 안되니 현 상황에선 나오기 어렵다.
-		case 1:
+		case 2:
 			outputMsg = uDTO.getName() + "님의 회원정보를 변경하였습니다.";
 			break;
-		case 2:
+		case 3:
 			System.err.println("SQL문이 잘못되었습니다.");
 			break;
-		case 3:
+		case 4:
 			System.err.println("파일이 잘못되었습니다.");
 			break;
 		}// end switch
 		
 		
-//		System.out.println(uDTO);
 		
 		JOptionPane.showMessageDialog(mud, outputMsg);
 	}// saveUserInfo
 	
-
-
-	
-
 }// class
