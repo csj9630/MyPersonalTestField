@@ -44,7 +44,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == mud.getJbtnModify()) {
-			System.out.println(btnFlag);
+			System.out.println("버튼 Flag : "+ btnFlag);
 			if (btnFlag == false) {
 				enterEditMode();
 				//setTextForTest();//테스트용 값 넣기
@@ -72,6 +72,9 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 		// TODO Auto-generated method stub
 		super.windowClosing(e);
 	}// windowClosing
+	
+	
+	//------------------------------------------------------------
 
 	private void enterEditMode() {
 		editFlag(true, EDITABLE);
@@ -85,7 +88,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 
 	private void saveChanges() {
 
-		editFlag(false, UNEDITABLE);
+		editFlag(false, UNEDITABLE);	
 		warningSet(false);
 
 		// DB 저장 로직 자리

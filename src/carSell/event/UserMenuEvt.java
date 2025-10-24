@@ -38,6 +38,7 @@ public class UserMenuEvt extends WindowAdapter implements ActionListener {
 		} // end if
 		if (ae.getSource() == umd.getjbtnOrderList()) {
 			//주문 내역은 공사 중.
+			//민병조 영역
 			JOptionPane.showMessageDialog(umd, "주문 내역 영역");
 		} // end if
 
