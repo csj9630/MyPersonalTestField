@@ -33,7 +33,7 @@ public class ModifyUserInfoDesign extends JDialog {
 		// 폰트 설정
 		Font fontTitle = new Font("맑은고딕", Font.BOLD, 30);
 		Font fontTxtLabel = new Font("맑은고딕", Font.BOLD, 18);
-		Font fontWrn = new Font("맑은고딕", Font.BOLD, 14);
+		//Font fontWrn = new Font("맑은고딕", Font.BOLD, 14);
 		Font fontBtn = new Font("맑은고딕", Font.BOLD, 20);
 		Font fontJtf = new Font("맑은고딕", Font.PLAIN, 18);
 		
@@ -54,11 +54,11 @@ public class ModifyUserInfoDesign extends JDialog {
 		jlAddr.setFont(fontTxtLabel);
 
 		// 경고 라벨
-		jlWrnName = new JLabel("내용이 비어있습니다1");
-		jlWrnEmail = new JLabel("내용이 비어있습니다2");
-		jlWrnTel = new JLabel("내용이 비어있습니다3");
-		jlWrnCard = new JLabel("내용이 비어있습니다4");
-		jlWrnAddr = new JLabel("내용이 비어있습니다5");
+		jlWrnName = new JLabel("이름이 (가) 비어있습니다");
+		jlWrnEmail = new JLabel("이메일 이(가) 비어있습니다");
+		jlWrnTel = new JLabel("전화번호 이(가) 비어있습니다");
+		jlWrnCard = new JLabel("카드번호 이(가) 비어있습니다");
+		jlWrnAddr = new JLabel("주소 이(가) 비어있습니다");
 		
 		//경고 라벨 폰트색
 		jlWrnName.setForeground(Color.red);
@@ -85,8 +85,6 @@ public class ModifyUserInfoDesign extends JDialog {
 		//텍스트필드에 숫자 입력만 가능하게 제한
 		
 		//텍스트필드 입력 마스크
-//		jtfTel = null;
-		
 		try {
 			MaskFormatter formatTel = new MaskFormatter("###-####-####");
 			MaskFormatter formatCard = new MaskFormatter("####-####-####-####");

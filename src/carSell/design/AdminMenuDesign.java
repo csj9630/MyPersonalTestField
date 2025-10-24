@@ -18,11 +18,11 @@ import carSell.event.UserMenuEvt;
  * '내 정보 메뉴' 화면을 디자인한 클래스<br>
  * 
  */
-public class UserMenuDesign2 extends JFrame {
+public class AdminMenuDesign extends JFrame {
 
 	private JButton jbtnModifyInfo, jbtnModifyPw, jbtnOrderList,jbtnBtn4;
 
-	public UserMenuDesign2() {
+	public AdminMenuDesign() {
 		super("사용자 정보");
 		JLabel jlTitle = new JLabel("내 정보");
 		
@@ -63,11 +63,11 @@ public class UserMenuDesign2 extends JFrame {
 		
 		jbtnModifyInfo.setLocation(500,500);
 	
-///////////////////////////////
-		jbtnModifyInfo.setBorder(BorderFactory.createEmptyBorder(20, 20,20, 20));// 상좌하우 여백
-		jbtnModifyPw.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
-		jbtnOrderList.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
-		jbtnBtn4.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
+/////////////////////////////////
+//		jbtnModifyInfo.setBorder(BorderFactory.createEmptyBorder(20, 20,20, 20));// 상좌하우 여백
+//		jbtnModifyPw.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
+//		jbtnOrderList.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
+//		jbtnBtn4.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));// 상좌하우 여백
 		
 		//JPanel에 상하 여백 넣기
 		//----createEmptyBorder(int top, int left, int bottom, int right)
@@ -114,6 +114,9 @@ public class UserMenuDesign2 extends JFrame {
 		return jbtnOrderList;
 	}
 
+	public static void main(String[] args) {
+		new AdminMenuDesign();
+	}
 
 }//class
 

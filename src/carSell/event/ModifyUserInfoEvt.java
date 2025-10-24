@@ -32,7 +32,7 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 
 	public ModifyUserInfoEvt(ModifyUserInfoDesign mud) {
 		this.mud = mud;
-		this.muf = new ModifyUserFunction(mud);
+//		this.muf = new ModifyUserFunction(mud);
 		this.us = new UserService();
 		
 		editFlag(false, UNEDITABLE);
@@ -44,14 +44,23 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == mud.getJbtnModify()) {
+			System.out.println(btnFlag);
 			if (btnFlag == false) {
 				enterEditMode();
-				setTextForTest();//테스트용 값 넣기
-			} else {
+				//setTextForTest();//테스트용 값 넣기
+			} else if (btnFlag == true) {
 				if (!jtfEmptyWarning()) {
 					return;
 				} // end if
+				
+				if (!(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(mud, "저장하시겠습니까?"))) {
+					return;
+				} // end if;
+				
+				
 				saveChanges();
+			
+			
 			} // end else
 			btnFlag = !btnFlag;
 		} // end if
@@ -75,10 +84,6 @@ public class ModifyUserInfoEvt extends WindowAdapter implements ActionListener {
 	}// enterEditMode
 
 	private void saveChanges() {
-
-		if (!(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(mud, "저장하시겠습니까?"))) {
-			return;
-		} // end if;
 
 		editFlag(false, UNEDITABLE);
 		warningSet(false);
