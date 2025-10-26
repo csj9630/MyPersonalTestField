@@ -27,7 +27,7 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 
 	public ModifyUserPasswordEvt(ModifyUserPasswordDesign mpd) {
 		this.mpd = mpd;
-//		this.mpf = new ModifyUserPasswordFunction(mpd);
+		this.mpf = new ModifyUserPasswordFunction(mpd);
 		loadUserPw(user_code);// 사용자 비번을 불러와서 저장.
 	}// ModifyUserPasswordEvt
 
@@ -190,7 +190,7 @@ public class ModifyUserPasswordEvt extends WindowAdapter implements ActionListen
 	 */
 	private void loadUserPw(int user_code) {
 //		String userPw = "";
-		UserDTO uDTO = new UserService().searchOneUser(user_code); 
+		UserDTO uDTO = new UserService().searchOneUser(user_code);
 
 //		userPw = uDTO.getPass();
 		this.userPw = uDTO.getPass();
