@@ -37,7 +37,7 @@ public class Work1013Design extends JFrame{
 		
 		JLabel jlbInform = new JLabel("소개");
 		
-		ImageIcon ii= new ImageIcon("C:/dev/workspace/jdbc_prj/src/day1014/images/rs_default_img.png");
+		ImageIcon ii= new ImageIcon("src/images/default.png");
 		jlbImage = new JLabel(ii);
 		jtfNum = new JTextField();
 		jtfName = new JTextField();
