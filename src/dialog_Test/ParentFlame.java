@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,9 +12,9 @@ import javax.swing.border.TitledBorder;
 public class ParentFlame extends JFrame implements ActionListener {
 
 
-
+	private String parentString;
 	private JButton jbtnDialogOpen, jbtnDialogOpen2;
-	
+	private JPanel jpBottom;
 	private JLabel jlText;//체크용 추가 파트
 	//private ChildDialog cd;//체크용 추가 파트
 	
@@ -25,10 +24,12 @@ public class ParentFlame extends JFrame implements ActionListener {
 		jbtnDialogOpen = new JButton("모달");
 		jbtnDialogOpen2 = new JButton("비모달");
 		
-		jlText = new JLabel("자식창에서 용돈 받기");//체크용 추가 파트
+		
+		
+		jlText = new JLabel(parentString);//체크용 추가 파트
 
 		JPanel jpCenter = new JPanel();
-		JPanel jpBottom = new JPanel();
+		jpBottom = new JPanel();
 		
 		
 		jpCenter.setBorder(new TitledBorder("다이얼로그"));
@@ -51,10 +52,36 @@ public class ParentFlame extends JFrame implements ActionListener {
 	}// ParentFlame
 
 	
+	public JPanel getJpBottom() {
+		return jpBottom;
+	}
+
+
+	public void setJpBottom(JPanel jpBottom) {
+		this.jpBottom = jpBottom;
+	}
+
+
 	public JLabel getJlText() {
 		return jlText;
 	}
 	
+	public String getParentString() {
+		return parentString;
+	}
+
+
+	public void setParentString(String parentString) {
+		this.parentString = parentString;
+	}
+
+	public void reset() {
+		
+		this.setVisible(false);
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
+	}
 	/**
 	 * 버튼 액션을 구분해주기.
 	 */
@@ -73,18 +100,22 @@ public class ParentFlame extends JFrame implements ActionListener {
 	 */
 	public void useModel() {
 		ChildDialog cd = new ChildDialog(this, true);
-		String result = cd.getChildText();
+		System.out.println(parentString);
+		System.out.println(this);
+//		String result = cd.getChildText();
 		
-		getJlText().setText(result);
-		System.out.println("부모 : "+ result);
+//		getJlText().setText(result);
+//		System.out.println("부모 : "+ result);
 	}//useModel
 	public void useNonModel() {
 //		new ChildDialog(this, false);
-		ChildDialog cd = new ChildDialog(this, true);
-		String result = cd.getChildText();
+		ChildDialog cd = new ChildDialog(this, false);
+		System.out.println(parentString);
+
+//		String result = cd.getChildText();
 		
-		getJlText().setText(result);
-		System.out.println("부모 : "+ result);
+//		getJlText().setText(result);
+//		System.out.println("부모 : "+ result);
 	}//useNonModel
 	
 	

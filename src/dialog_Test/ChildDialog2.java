@@ -21,15 +21,15 @@ import javax.swing.JPanel;
  * windowListener 추가
  * 윈도우 버튼으로 닫을 때만 필드 String 변수값 변경.
  */
-public class ChildDialog extends JDialog implements ActionListener, WindowListener {
+public class ChildDialog2 extends JDialog implements ActionListener, WindowListener {
 	
 
 
 	private String childText="Hello World";//변경해서 보낼 field 변수
-	private ParentFlame pf;
+	private ParentFlame2 pf;
 	private JButton jbtnClose;
 	
-	public ChildDialog(ParentFlame pf, boolean modal) {
+	public ChildDialog2(ParentFlame2 pf, boolean modal) {
 		super(pf,"부가적인 정보를 제공",modal);
 		
 		this.pf = pf;
@@ -54,7 +54,7 @@ public class ChildDialog extends JDialog implements ActionListener, WindowListen
 		add("Center",jlblOutput);
 		add("Center",jlTxt);//테스트용 텍스트.
 		
-		pf.setParentString("자식창");
+		
 		jbtnClose = new JButton("닫기");
 		JPanel jpSouth = new JPanel();
 		jpSouth.add(jbtnClose);
@@ -86,9 +86,9 @@ public class ChildDialog extends JDialog implements ActionListener, WindowListen
 		if(ae.getSource() == jbtnClose) {
 			
 		}//end if
-		pf.setParentString("버튼 누름");
-		
-//		
+		pf.setParentString("너에게 닿기를");
+//		pf.revalidate();
+//		pf.repaint();
 		this.dispose();
 	}
 	
@@ -103,15 +103,17 @@ public class ChildDialog extends JDialog implements ActionListener, WindowListen
 		// TODO Auto-generated method stub
 		
 //		setChildText("Data From Child");
-		
+		pf.setParentString("윈도우 닫기 버튼 누름");
+		pf.revalidate();
+		pf.repaint();
+		this.dispose();
 		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
-		pf.setParentString("윈도우 닫기 버튼 누름");
-        pf.reset();
+		
 	}
 
 	@Override
