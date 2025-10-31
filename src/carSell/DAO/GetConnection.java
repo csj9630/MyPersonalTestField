@@ -13,7 +13,7 @@ import java.util.Properties;
 public class GetConnection {
 	private static GetConnection getCon;
 
-	//private 선언으로 외부에서 객체 생성 불가
+	////private 선언으로 외부에서 객체 생성 불가
 	private GetConnection() {
 		super();
 	}// GetConnection
