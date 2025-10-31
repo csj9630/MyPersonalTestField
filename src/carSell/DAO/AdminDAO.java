@@ -1,8 +1,5 @@
 package carSell.DAO;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import carSell.DTO.AdminDTO;
 
 public class AdminDAO {
