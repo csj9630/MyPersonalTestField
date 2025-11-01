@@ -1,4 +1,4 @@
-package kr.co.sist.car_sell.dao;
+package blobTest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File; // 파일 처리용
