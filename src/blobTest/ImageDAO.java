@@ -1,4 +1,4 @@
-package blobTest;
+package kr.co.sist.car_sell.dao;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File; // 파일 처리용
@@ -11,61 +11,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 
-import carSell.DAO.GetConnection;
+import kr.co.sist.car_sell.dto.ImageDTO;
 
-public class ImageDAO_CSJ {
-	private static ImageDAO_CSJ imageDAO;
+public class ImageDAO {
+	private static ImageDAO imageDAO;
 
-	private ImageDAO_CSJ() {
+	private ImageDAO() {
 	}
 
-	public static ImageDAO_CSJ getInstance() {
+	public static ImageDAO getInstance() {
 		if (imageDAO == null) {
-			imageDAO = new ImageDAO_CSJ();
+			imageDAO = new ImageDAO();
 		}
 		return imageDAO;
 	}
 
 	/**
-	 * [신규 추가] 차량 코드로 이미지 '경로' 목록 조회 (String 리스트 반환)
-	 * 
-	 * @param productCode 차량 코드
-	 * @return 이미지 경로(String) 리스트
-	 */
-	public List<String> selectCarImagePaths(int productCode) throws SQLException, IOException {
-		List<String> pathList = new ArrayList<>(); // String 리스트 생성
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		GetConnection gc = GetConnection.getInstance();
-
-		// IMAGE 테이블에서 image_name (경로) 컬럼만 조회
-		String sql = "SELECT i.image_name " + "FROM CAR_IMAGE ci " + "JOIN IMAGE i ON ci.IMAGE_CODE = i.IMAGE_CODE "
-				+ "WHERE ci.PRODUCT_CODE = ? ORDER BY i.IMAGE_CODE";
-
-		try {
-			con = gc.getConn();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, productCode);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				pathList.add(rs.getString("image_name")); // 경로 문자열을 리스트에 추가
-			}
-		} finally {
-			gc.dbClose(con, pstmt, rs);
-		}
-		return pathList; // 경로 리스트 반환
-	}
-
-	/**
 	 * [관리자/데이터입력용] 이미지 파일을 DB BLOB 컬럼에 저장
 	 * 
-	 * @param imageFile 파일 선택기로 고른 이미지 파일
-	 * @return 1이면 성공
+	 * @param idto 이미지DTO 값을 입력 받아서
+	 * @return DB insert 결과를 출력 받음.
 	 * @throws SQLException
 	 * @throws IOException
 	 */
@@ -184,7 +151,15 @@ public class ImageDAO_CSJ {
 		return icon;
 	}// getImageIconFromBlob
 
-	/** [구매/상세용] 차량 코드로 '이미지 정보(DTO)' 목록 조회 (BLOB 제외) */
+	/**
+	 * [구매/상세용] DB에서 이미지Blob 데이터를 Jcomponent ImageIcon으로 변환한다.<br>
+	 * 차량 코드를 받아서 차량 코드에 맞는 모든 이미지Blob 데이터를 List<ImageIcon>로 묶어서 리턴.<br>
+	 * 
+	 * @param productCode 차량 코드, db select 조건.
+	 * @return	 차량 코드에 맞는 모든 이미지Blob 데이터
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	public List<ImageIcon> selectImageList(int productCode) throws SQLException, IOException {
 		// (이전에 제공한 코드와 동일 - image_code, image_name 등만 가져옴)
 		List<ImageIcon> iconlist = new ArrayList<>();
@@ -197,9 +172,9 @@ public class ImageDAO_CSJ {
 
 		InputStream is = null;
 		ByteArrayOutputStream baos = null;
-//		String sql = "SELECT i.IMAGE_CODE, i.IMAGE_NAME, i.IMAGE_ADD_DATE " + "FROM CAR_IMAGE ci "
-//				+ "JOIN IMAGE i ON ci.IMAGE_CODE = i.IMAGE_CODE " + "WHERE ci.PRODUCT_CODE = ? ORDER BY i.IMAGE_CODE";
-//		String sql = " select image_code, product_code, image_name, image_blob, image_add_date from image where product_code = ? order by image_code ";
+//      String sql = "SELECT i.IMAGE_CODE, i.IMAGE_NAME, i.IMAGE_ADD_DATE " + "FROM CAR_IMAGE ci "
+//              + "JOIN IMAGE i ON ci.IMAGE_CODE = i.IMAGE_CODE " + "WHERE ci.PRODUCT_CODE = ? ORDER BY i.IMAGE_CODE";
+//      String sql = " select image_code, product_code, image_name, image_blob, image_add_date from image where product_code = ? order by image_code ";
 		String sql = " select image_blob from image where product_code = ? order by image_code ";
 
 		try {
@@ -228,13 +203,80 @@ public class ImageDAO_CSJ {
 			} // end while
 
 		} finally {
-			if (is != null) is.close(); 
-			if (baos != null) baos.close();
+			if (is != null)
+				is.close();
+			if (baos != null)
+				baos.close();
 			gc.dbClose(con, pstmt, rs);
 		} // end finally
 
 		return iconlist;
-	}// method
+	}// selectImageList
+	
+	//*************************경로 쓰거나 다른 리턴값이라 안 쓰는 파트(로 예상)********************************************
+
+	/** [구매/상세용] 차량 코드로 '이미지 정보(DTO)' 목록 조회 (BLOB 제외) */
+	public List<ImageDTO> selectCarImages(int productCode) throws SQLException, IOException {
+		// (이전에 제공한 코드와 동일 - image_code, image_name 등만 가져옴)
+		List<ImageDTO> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		GetConnection gc = GetConnection.getInstance();
+
+		String sql = "SELECT i.IMAGE_CODE, i.IMAGE_NAME, i.IMAGEADD_DATE " + "FROM CAR_IMAGE ci "
+				+ "JOIN IMAGE i ON ci.IMAGE_CODE = i.IMAGE_CODE " + "WHERE ci.PRODUCT_CODE = ? ORDER BY i.IMAGE_CODE";
+
+		try {
+			con = gc.getConn();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, productCode);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ImageDTO img = new ImageDTO();
+				img.setImage_code(rs.getInt("IMAGE_CODE"));
+				img.setImage_name(rs.getString("IMAGE_NAME"));
+				img.setImage_add_date(rs.getDate("IMAGEADD_DATE"));
+				list.add(img);
+			}
+		} finally {
+			gc.dbClose(con, pstmt, rs);
+		}
+		return list;
+	}// selectCarImages
+
+	/**
+	 * [신규 추가] 차량 코드로 이미지 '경로' 목록 조회 (String 리스트 반환)
+	 * 
+	 * @param productCode 차량 코드
+	 * @return 이미지 경로(String) 리스트
+	 */
+	public List<String> selectCarImagePaths(int productCode) throws SQLException, IOException {
+		List<String> pathList = new ArrayList<>(); // String 리스트 생성
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		GetConnection gc = GetConnection.getInstance();
+
+		// IMAGE 테이블에서 image_name (경로) 컬럼만 조회
+		String sql = "SELECT i.image_name " + "FROM CAR_IMAGE ci " + "JOIN IMAGE i ON ci.IMAGE_CODE = i.IMAGE_CODE "
+				+ "WHERE ci.PRODUCT_CODE = ? ORDER BY i.IMAGE_CODE";
+
+		try {
+			con = gc.getConn();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, productCode);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				pathList.add(rs.getString("image_name")); // 경로 문자열을 리스트에 추가
+			}
+		} finally {
+			gc.dbClose(con, pstmt, rs);
+		}
+		return pathList; // 경로 리스트 반환
+	}// selectCarImagePaths
 
 	// ★ 중요: CAR_IMAGE 테이블에 매핑 정보 추가하는 메소드도 필요 ★
 	public void insertCarImageMapping(int productCode, int imageCode) throws SQLException, IOException {
@@ -253,4 +295,4 @@ public class ImageDAO_CSJ {
 			gc.dbClose(con, pstmt, null);
 		}
 	}//insertCarImageMapping
-}
+}// class
