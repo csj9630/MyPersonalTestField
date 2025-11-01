@@ -11,9 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.ImageIcon;
 
-import kr.co.sist.car_sell.dto.ImageDTO;
+import carSell.DAO.GetConnection;
 
 public class ImageDAO {
 	private static ImageDAO imageDAO;
